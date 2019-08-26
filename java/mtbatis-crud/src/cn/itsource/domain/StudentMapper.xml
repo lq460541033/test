@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- 完成一个对象关系映射文件 -> 
+	作用：一个对象的所有SQL都应该写在这个映射文件中 这个文件一般和我们的domain写在同一个包里面，取名为 
+	-> domain的名称+Mapper.xml -->
+ 
+ 
+<!-- namespace:命名空间（每个Mapper必须有命名空间） -->
+<mapper namespace="cn.itsource.domain.StudentMapper">
+ 
+	<!-- 
+	    select:它里面写查询语句
+	    id：查询语句的唯一标识（名称不能重复）
+	    	如何在 java代码中找到sql语句？  命名空间+id 
+	    		例子：cn.itsource.domain.ProductMapper.select
+	    parameterType：传入的参数类型。 除了MyBatis支持的类型，其它的类型都通通使用全限定名
+	    resultType:返回的每一条数据的结果类型（结果类型写权限定名称 ） 查询功能使用
+	 -->
+ 
+	<select id="queryOne" parameterType="Long" resultType="Student">
+		select * from student where id = #{id}
+	</select>
+	
+	<select id="queryAll"  resultType="Student">
+		select * from student 
+	</select>
+	
+	<insert id="save" parameterType="Student">
+		insert into student (username,password) values(#{username},#{password})
+	</insert>
+	
+	<update id="update" parameterType="Student">
+		update student set id=#{id}, username=#{username},password=#{password} where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="Long" >
+		delete from student where id=#{id}
+	</delete>
+	
+</mapper>

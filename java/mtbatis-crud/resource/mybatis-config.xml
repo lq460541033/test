@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 
+	完成一个mybatis-config.xml的文件
+		-> 作用：配置连接数据库的所有需要的环境
+			必须连接到所有要使用的映射文件（ProductMapper.xml）
+ -->
+ 
+<!--configuration 根目录  -->
+<configuration>
+	<!--  引入（关联）db.properties文件 --> 
+	<properties resource="mysqldb.properties"></properties>
+	
+	<!-- 配置别名：在MyBatis中为一个类取别名   配置别名是为了在对象映射文件中接收参数类型和返回参数类型时使用-->
+	<typeAliases>
+		<!-- 	
+			设置这个包下面的所有类的别名
+			<package name="cn.itsource.domain"/> 
+		-->
+		
+		<!--  
+			设置单个类的别名       alias:取的别名    type：这个别名所对应的Java类    别名使用的时候与大小写无关
+		-->
+		<typeAlias alias="Student" type="cn.itsource.domain.Student"/>
+	</typeAliases>
+	
+	<!-- 环境们：很多环境     default：表示默认使用哪一个环境-->
+	<environments default="development">
+		<!-- 单个环境：一个环境       id：表示这个环境的名称-->
+		<environment id="development">
+			<!-- transactionManager：事务管理器 （使用的JDBC事务管理器）-->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- MyBatis自帶POOLED连接池（数据源） -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${db.driver}" />
+				<property name="url" value="${db.url}" />
+				<property name="username" value="${db.username}" />
+				<property name="password" value="${db.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- resource:表示 核心配置文件（mybatis-config.xml）必须与所有的对象映射文件（ProductMapper.xml）关联！！！！ -->
+	<mappers>
+		<mapper resource="cn/itsource/domain/StudentMapper.xml" />
+	</mappers>
+</configuration>
